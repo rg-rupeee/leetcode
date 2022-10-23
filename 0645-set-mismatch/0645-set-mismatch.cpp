@@ -15,8 +15,6 @@ public:
             if(nums[i] > 0) mis = i+1;
         }
         
-        vector<int> ans = {dup, mis};
-        
-        return ans;
+        return {dup, mis};
     }
 };
