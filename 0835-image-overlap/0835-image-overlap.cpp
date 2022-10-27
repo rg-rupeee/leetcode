@@ -1,27 +1,26 @@
 class Solution {
 public:
-    int shiftANDcount(vector<vector<int>> img1, vector<vector<int>> img2, int xShift, int yShift){
-        int i, j, n, cnt;
+    int largestOverlap(vector<vector<int>>& img1, vector<vector<int>>& img2) {
+        int i, j, n;
         n = img1.size();
-        cnt = 0;
+        vector<pair<int, int>> v1;
+        vector<pair<int, int>> v2;
         for(i=0; i<n; i++){
             for(j=0; j<n; j++){
-                if(i+xShift<n && j+yShift<n && i+xShift>=0 && j+yShift>=0){
-                    if(img1[i+xShift][j+yShift] && img2[i][j]) cnt++;
-                }
+                if(img1[i][j]) v1.push_back({i, j});
+                if(img2[i][j]) v2.push_back({i, j});
             }
         }
         
-        return cnt;
-    }
-    int largestOverlap(vector<vector<int>>& img1, vector<vector<int>>& img2) {
-        int i, j, n, ans;
-        n = img1.size();
-        ans = 0;
-        for(i=-n; i<=n; i++){
-            for(j=-n; j<=n; j++){
-                ans = max(ans, shiftANDcount(img1, img2, i, j));
-                // ans = max(ans, shiftANDcount(img1, img2, i*-1, j*-1));
+        int xdis, ydis, ans=0;
+        map<pair<int, int>, int> mp;
+        for(auto x: v1){
+            for(auto y: v2){
+                xdis = x.first - y.first;
+                ydis = x.second - y.second;
+                
+                mp[{xdis, ydis}]++;
+                ans = max(ans, mp[{xdis, ydis}]);
             }
         }
         return ans;
