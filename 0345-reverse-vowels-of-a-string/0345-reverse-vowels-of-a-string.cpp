@@ -1,23 +1,34 @@
 class Solution {
 public:
     bool isVovel(char c){
-        if(c=='a' || c=='e' || c=='i' || c=='o' || c=='u') return true;
-        if(c=='A' || c=='E' || c=='I' || c=='O' || c=='U') return true;
+        if(c=='a' || c=='e' || c=='i' || c=='o' || c=='u' || c=='A' || c=='E' || c=='I' || c=='O' || c=='U') return true;
         
         return false;
     }
     string reverseVowels(string s) {
-        stack<char> v;
-        int i, n=s.size();
-        for(i=0; i<n; i++){
-            if(isVovel(s[i])) v.push(s[i]);
-        }
-        for(i=0; i<n; i++){
-            if(isVovel(s[i])) {
-                s[i] = v.top();
-                v.pop();
+        int left, right;
+        left = 0;
+        right = s.size()-1;
+        
+        while(left <= right){
+            while(left<=right && !isVovel(s[left])) {
+                left++;
             }
+            
+            while(left<=right && !isVovel(s[right])){
+                right--;
+            }
+            
+            if(left<=right && isVovel(s[left]) && isVovel(s[right])){
+                char temp = s[left];
+                s[left] = s[right];
+                s[right] = temp;
+            }
+            
+            left++;
+            right--;
         }
+        
         return s;
     }
 };
