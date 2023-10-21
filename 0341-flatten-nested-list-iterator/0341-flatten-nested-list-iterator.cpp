@@ -17,30 +17,32 @@
  */
 
 class NestedIterator {
-    vector<int> flattenedList;
+public:
+    vector<int> flatList;
     vector<int>::iterator it;
     
-    void flatten(const vector<NestedInteger> &nestedList) {
-        for (const auto &ni : nestedList) {
-            if (ni.isInteger()) {
-                flattenedList.push_back(ni.getInteger());
-            } else {
+    void flatten(vector<NestedInteger> &nestedList){
+        for(auto &ni: nestedList){
+            if(ni.isInteger()){
+                flatList.push_back(ni.getInteger());
+            }
+            else{
                 flatten(ni.getList());
             }
         }
     }
-public:
+    
     NestedIterator(vector<NestedInteger> &nestedList) {
         flatten(nestedList);
-        it = flattenedList.begin();
+        it = flatList.begin();
     }
-
+    
     int next() {
         return *it++;
     }
-
+    
     bool hasNext() {
-        return it != flattenedList.end();
+       return it != flatList.end();
     }
 };
 
